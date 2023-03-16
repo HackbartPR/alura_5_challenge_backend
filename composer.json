@@ -1,0 +1,18 @@
+{
+    "name": "hackbartpr/alura_5_challenge_backend",
+    "description": "Resolução da 5ª edição do Challeng Backend da Alura",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HackbartPR",
+            "email": "cgharckbart@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hackbartpr\\": "src/"
+        }
+    },
+    "require": {}
+}
