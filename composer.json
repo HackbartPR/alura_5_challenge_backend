@@ -11,10 +11,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Hackbartpr\\": "src/"
+            "HackbartPR\\": "src/"
         }
     },
     "require": {
-        "robmorgan/phinx": "^0.13.4"
+        "robmorgan/phinx": "^0.13.4",
+        "psr/container": "^2.0",
+        "vlucas/phpdotenv": "^5.5",
+        "php-di/php-di": "^7.0"
     }
 }
