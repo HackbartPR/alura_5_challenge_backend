@@ -14,5 +14,7 @@
             "Hackbartpr\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "robmorgan/phinx": "^0.13.4"
+    }
 }
