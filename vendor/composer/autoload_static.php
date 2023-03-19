@@ -37,6 +37,7 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Server\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'PhpOption\\' => 10,
@@ -44,6 +45,7 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         ),
         'N' => 
         array (
+            'Nyholm\\Psr7\\' => 12,
             'Nyholm\\Psr7Server\\' => 18,
         ),
         'L' => 
@@ -56,6 +58,7 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         ),
         'H' => 
         array (
+            'Http\\Message\\' => 13,
             'HackbartPR\\' => 11,
         ),
         'G' => 
@@ -125,6 +128,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-server-handler/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -142,6 +149,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
         ),
+        'Nyholm\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
+        ),
         'Nyholm\\Psr7Server\\' => 
         array (
             0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
@@ -153,6 +164,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'Invoker\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/invoker/src',
+        ),
+        'Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-http/message-factory/src',
         ),
         'HackbartPR\\' => 
         array (
