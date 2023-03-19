@@ -1,7 +1,7 @@
 # Alura 5º Challenge Backend
 <p>Projeto de uma API construída com PHP nativo.</p>
 
-<p>Este projeto tem como base o projeto proposto pela Alura, o qual a plataforma disponibiliza apenas o objetivo e deixa livre para o estudante realizar o projeto da maneira que lhe servir.</p>
+<p>Este projeto tem como base o projeto proposto pela Alura, o qual a plataforma disponibiliza apenas o objetivo e deixa livre para o estudante realizar o projeto da maneira que desejar.</p>
 
 ## Objetivos Compridos - Propostos pela Alura (Até o momento)
 - Criar a tabela Videos
