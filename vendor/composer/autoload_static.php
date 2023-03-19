@@ -37,9 +37,14 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'PhpOption\\' => 10,
             'Phinx\\' => 6,
+        ),
+        'N' => 
+        array (
+            'Nyholm\\Psr7Server\\' => 18,
         ),
         'L' => 
         array (
@@ -120,6 +125,11 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
@@ -131,6 +141,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'Phinx\\' => 
         array (
             0 => __DIR__ . '/..' . '/robmorgan/phinx/src/Phinx',
+        ),
+        'Nyholm\\Psr7Server\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7-server/src',
         ),
         'Laravel\\SerializableClosure\\' => 
         array (
