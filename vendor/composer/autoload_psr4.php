@@ -26,6 +26,7 @@ return array(
     'Nyholm\\Psr7\\' => array($vendorDir . '/nyholm/psr7/src'),
     'Nyholm\\Psr7Server\\' => array($vendorDir . '/nyholm/psr7-server/src'),
     'Laravel\\SerializableClosure\\' => array($vendorDir . '/laravel/serializable-closure/src'),
+    'Laminas\\HttpHandlerRunner\\' => array($vendorDir . '/laminas/laminas-httphandlerrunner/src'),
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
     'Http\\Message\\' => array($vendorDir . '/php-http/message-factory/src'),
     'HackbartPR\\' => array($baseDir . '/src'),

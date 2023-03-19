@@ -2,6 +2,10 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 //Identificação da requisição
 $action = $_SERVER['PATH_INFO'] ?? '/';
 $method = $_SERVER['REQUEST_METHOD'];
@@ -31,5 +35,16 @@ $creator = new \Nyholm\Psr7Server\ServerRequestCreator(
 );
 $serverRequest = $creator->fromGlobals();
 
-//Chamando Controller
-$controller->handle($serverRequest);
+//Recebendo Response do Controller
+$responseController = $controller->handle($serverRequest);
+
+//Enviando Response para o client usando Stream
+$responseBody = $psr17Factory->createStream($responseController->getBody());
+
+$response = $psr17Factory->createResponse($responseController->getStatusCode())->withBody($responseBody);
+
+foreach ($responseController->getHeaders() as $header => $value) {
+    $response = $response->withHeader($header, $value);
+}
+
+(new \Laminas\HttpHandlerRunner\Emitter\SapiEmitter())->emit($response);

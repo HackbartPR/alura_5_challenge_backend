@@ -34,4 +34,10 @@ class VideoRepository
         return $stmt->execute();        
     }
 
+    public function all(): array
+    {
+        $stmt = $this->pdo->query("SELECT * FROM videos");
+        return $stmt->fetchAll();
+    }
+
 }

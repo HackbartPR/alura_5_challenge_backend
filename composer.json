@@ -21,6 +21,7 @@
         "php-di/php-di": "^7.0",
         "nyholm/psr7-server": "^1.0",
         "psr/http-server-handler": "^1.0",
-        "nyholm/psr7": "^1.5"
+        "nyholm/psr7": "^1.5",
+        "laminas/laminas-httphandlerrunner": "^2.5"
     }
 }

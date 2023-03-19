@@ -51,6 +51,7 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'L' => 
         array (
             'Laravel\\SerializableClosure\\' => 28,
+            'Laminas\\HttpHandlerRunner\\' => 26,
         ),
         'I' => 
         array (
@@ -160,6 +161,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'Laravel\\SerializableClosure\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
+        ),
+        'Laminas\\HttpHandlerRunner\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laminas/laminas-httphandlerrunner/src',
         ),
         'Invoker\\' => 
         array (

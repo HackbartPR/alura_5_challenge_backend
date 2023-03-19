@@ -16,8 +16,7 @@ class NewVideoController implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        
-
-        return new Response(200, ['Content-Type' => 'application/json']);
+        $videoList = $this->repository->all();
+        return new Response(200, ['Content-Type' => 'application/json'], json_encode($videoList));
     }
 }
