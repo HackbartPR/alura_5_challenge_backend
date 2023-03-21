@@ -40,4 +40,13 @@ class VideoRepository
         return $stmt->fetchAll();
     }
 
+    public function show(int $id): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM videos WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        return $stmt->fetch();        
+    }
+
 }

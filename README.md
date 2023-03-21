@@ -19,4 +19,4 @@
 - Utilizar ServerRequestInterface e ResponseInterface (PSR 7)
 - Construir os as requisições e Respostas com Factories (PSR 17)
 - Utilizar Stream nas Responses
-
+- Dupla Validação, validações das Requisições nos Controllers e nas Requisições do Banco (PDO Bind Value)
