@@ -12,7 +12,7 @@
 - Utilizar Arquitetura MVC
 - Criar Container MySQL
 - Criar Sistema de Migrations
-- Criar um Dispatcher
+- Criar um Router
 - Utilizar Autoload do Composer (PSR 4)
 - Utilizar Sistema de Container de Injeção de Dependências (PSR 11)
 - Utilizar RequestHandlerInterface (PSR 15)
