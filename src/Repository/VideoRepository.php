@@ -21,7 +21,13 @@ class VideoRepository
 
     public function update(Video $video): bool
     {
-        return true;
+        $stmt = $this->pdo->prepare("UPDATE videos SET title = :title, description = :desc, url = :url WHERE id = :id");
+        $stmt->bindValue(':id', $video->id(), FILTER_VALIDATE_INT);
+        $stmt->bindValue(':title', $video->title, FILTER_DEFAULT);
+        $stmt->bindValue(":desc", $video->description, FILTER_DEFAULT);
+        $stmt->bindValue(":url", $video->url, FILTER_VALIDATE_URL);
+        
+        return $stmt->execute();;
     }
 
     public function add(Video $video): bool

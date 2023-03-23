@@ -18,9 +18,9 @@ return [
             'controller'   => \HackbartPR\Controller\NewVideoController::class
         ),
         array(
-            'method'       => ['PUT, PATCH'], 
+            'method'       => ['PUT', 'PATCH'], 
             'path_pattern' => '/^\/videos\/(?P<id>\d+)$/',
-            'controller'   => \HackbartPR\Controller\NewVideoController::class
+            'controller'   => \HackbartPR\Controller\UpdateVideoController::class
         )
     ],
     \HackbartPR\Controller\NotFoundVideoController::class
