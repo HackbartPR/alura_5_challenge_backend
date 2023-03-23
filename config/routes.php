@@ -21,7 +21,13 @@ return [
             'method'       => ['PUT', 'PATCH'], 
             'path_pattern' => '/^\/videos\/(?P<id>\d+)$/',
             'controller'   => \HackbartPR\Controller\UpdateVideoController::class
+        ),
+        array(
+            'method'       => ['DELETE'], 
+            'path_pattern' => '/^\/videos\/(?P<id>\d+)$/',
+            'controller'   => \HackbartPR\Controller\DeleteVideoController::class
         )
+        
     ],
     \HackbartPR\Controller\NotFoundVideoController::class
 ];

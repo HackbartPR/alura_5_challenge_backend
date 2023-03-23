@@ -55,4 +55,11 @@ class VideoRepository
         return $stmt->fetch();        
     }
 
+    public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM videos WHERE id = ?");
+        $stmt->bindValue(1, $id);
+        return $stmt->execute();
+    }
+
 }
