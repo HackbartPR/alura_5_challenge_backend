@@ -19,7 +19,7 @@ class VideoRepository
         return $this->add($video);
     }
 
-    public function update(Video $video): bool
+    private function update(Video $video): bool
     {
         $stmt = $this->pdo->prepare("UPDATE videos SET title = :title, description = :desc, url = :url WHERE id = :id");
         $stmt->bindValue(':id', $video->id(), FILTER_VALIDATE_INT);
@@ -30,7 +30,7 @@ class VideoRepository
         return $stmt->execute();;
     }
 
-    public function add(Video $video): bool
+    private function add(Video $video): bool
     {
         $stmt = $this->pdo->prepare("INSERT INTO videos (title, description, url) VALUES (:title, :desc, :url);");
         $stmt->bindValue(':title', $video->title, FILTER_DEFAULT);

@@ -26,13 +26,13 @@ class UpdateVideoController extends Params implements RequestHandlerInterface
 
         [$id, $title, $description, $url] = $validate;
         $video = new Video($id, $title, $description, $url);
-        $isUpdated = $this->repository->update($video);
+        $isUpdated = $this->repository->save($video);
         
         if (!$isUpdated) {
             return new Response(400);
         }
 
-        return new Response(201, ['Content-Type' => 'applicationnn/json'], json_encode($video));
+        return new Response(201, ['Content-Type' => 'application/json'], json_encode($video));
     }
 
     private function validate(ServerRequestInterface $request): array|bool

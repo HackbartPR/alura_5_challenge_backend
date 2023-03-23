@@ -24,18 +24,20 @@ class NewVideoController implements RequestHandlerInterface
         }
 
         [$title, $description, $url] = $validate;
-        $isSaved = $this->repository->add(new Video(null, $title, $description, $url)); 
+        $video = new Video(null, $title, $description, $url);
+        $isSaved = $this->repository->save($video); 
 
         if (!$isSaved) {
             return new Response(400);
         }
         
-        return new Response(201);
+        return new Response(201, ['Content-Type' => 'application/json'], json_encode($video));
     }
 
     private function validate(ServerRequestInterface $request): array|bool
     {
-        $body = $request->getParsedBody();
+        $body = $request->getBody()->getContents();
+        $body = json_decode($body, true);
         
         if (!isset($body['title']) || !isset($body['description']) || !isset($body['url']) ) {
             return false;
