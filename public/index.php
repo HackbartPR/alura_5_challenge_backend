@@ -21,12 +21,6 @@ $routes = require_once __DIR__ . '/../config/routes.php';
 $class = \HackbartPR\Config\Router::route($routes);
 $controller = $diContainer->get($class);
 
-/* if (isset($router["$method|$action"])) {
-    $class = $router["$method|$action"];
-    $controller = $diContainer->get($class);
-} else {
-    // $controller = new 404 controller
-} */
 
 // Criando um objeto HTTP Request (PSR7) utilizando a fabrica de objeto (PSR 17)
 $psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();

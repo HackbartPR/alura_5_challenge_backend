@@ -12,7 +12,7 @@ final class Router
         $controller = null;        
 
         foreach ($routes[0] as $route) {
-            if (preg_match($route['path_pattern'], $action, $match) && $route['method'] == $method) {                
+            if (preg_match($route['path_pattern'], $action, $match) && in_array($method, $route['method'])) {                
                 $controller = $route['controller'];
                 $isMatch = true;
             }
