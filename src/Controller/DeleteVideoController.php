@@ -2,15 +2,13 @@
 
 namespace HackbartPR\Controller;
 
+use HackbartPR\Entity\Controller;
 use Nyholm\Psr7\Response;
-use HackbartPR\Entity\Video;
-use HackbartPR\Entity\Params;
 use Psr\Http\Message\ResponseInterface;
 use HackbartPR\Repository\VideoRepository;
-use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class DeleteVideoController extends Params implements RequestHandlerInterface
+class DeleteVideoController extends Controller
 {
     public function __construct(
         private VideoRepository $repository

@@ -3,11 +3,11 @@
 namespace HackbartPR\Controller;
 
 use Nyholm\Psr7\Response;
+use HackbartPR\Entity\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class NotFoundVideoController implements RequestHandlerInterface
+class NotFoundVideoController extends Controller
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

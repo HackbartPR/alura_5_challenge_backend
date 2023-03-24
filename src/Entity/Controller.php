@@ -2,8 +2,12 @@
 
 namespace HackbartPR\Entity;
 
-abstract class Params
-{
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+abstract class Controller implements RequestHandlerInterface
+{   
     protected function getQueryParam(string $uri): string|bool
     {
         $uriArray = explode('/', $uri);

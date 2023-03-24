@@ -3,12 +3,12 @@
 namespace HackbartPR\Controller;
 
 use Nyholm\Psr7\Response;
-use HackbartPR\Repository\VideoRepository;
+use HackbartPR\Entity\Controller;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use HackbartPR\Repository\VideoRepository;
 use Psr\Http\Message\ServerRequestInterface;
 
-class AllVideoController implements RequestHandlerInterface
+class AllVideoController extends Controller
 {
     public function __construct(
         private VideoRepository $repository
