@@ -18,5 +18,8 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('contents', $body);
     }
 
-    
+    public function testShouldDeleteVideo(): void
+    {
+        //Salvar um dado no banco, recuperar seu ID e deletá-lo
+    }
 }
