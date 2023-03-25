@@ -20,10 +20,17 @@ class NewVideoController extends Controller
         $validate = $this->validate($request); 
 
         if (!$validate) {
-            return new Response(400);
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Video format is not allowed.']));
         }
 
         [$title, $description, $url] = $validate;
+
+        $isExist = $this->repository->showByUrl($url);
+
+        if (!is_bool($isExist)) {
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'URL already exists.']));
+        }
+
         $video = new Video(null, $title, $description, $url);
         $isSaved = $this->repository->save($video); 
 
@@ -31,7 +38,8 @@ class NewVideoController extends Controller
             return new Response(400);
         }
         
-        $body = json_encode(['contents'=>$video]);
+        $saved = $this->repository->showByUrl($url);
+        $body = json_encode(['contents'=>$saved]);
         return new Response(201, ['Content-Type' => 'application/json'], $body);
     }
 
