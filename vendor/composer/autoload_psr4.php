@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Tests\\Traits\\' => array($baseDir . '/tests/traits'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Intl\\Normalizer\\' => array($vendorDir . '/symfony/polyfill-intl-normalizer'),
@@ -32,11 +31,14 @@ return array(
     'Laminas\\HttpHandlerRunner\\' => array($vendorDir . '/laminas/laminas-httphandlerrunner/src'),
     'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
     'Http\\Message\\' => array($vendorDir . '/php-http/message-factory/src'),
+    'HackbartPR\\Tests\\Traits\\' => array($baseDir . '/tests/traits'),
+    'HackbartPR\\Seeds\\' => array($baseDir . '/db/seeds'),
     'HackbartPR\\' => array($baseDir . '/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'GrahamCampbell\\ResultType\\' => array($vendorDir . '/graham-campbell/result-type/src'),
+    'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),

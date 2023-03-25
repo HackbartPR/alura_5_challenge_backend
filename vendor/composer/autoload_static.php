@@ -25,10 +25,6 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
     );
 
     public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'Tests\\Traits\\' => 13,
-        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -71,6 +67,8 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'H' => 
         array (
             'Http\\Message\\' => 13,
+            'HackbartPR\\Tests\\Traits\\' => 24,
+            'HackbartPR\\Seeds\\' => 17,
             'HackbartPR\\' => 11,
         ),
         'G' => 
@@ -79,6 +77,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
+        ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
         ),
         'D' => 
         array (
@@ -96,10 +98,6 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
     );
 
     public static $prefixDirsPsr4 = array (
-        'Tests\\Traits\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/tests/traits',
-        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -201,6 +199,14 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         array (
             0 => __DIR__ . '/..' . '/php-http/message-factory/src',
         ),
+        'HackbartPR\\Tests\\Traits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests/traits',
+        ),
+        'HackbartPR\\Seeds\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/db/seeds',
+        ),
         'HackbartPR\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
@@ -220,6 +226,10 @@ class ComposerStaticInit7fb4280246dd5869fc7bf4682c54c522
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
         'Dotenv\\' => 
         array (

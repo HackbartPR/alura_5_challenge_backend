@@ -3,7 +3,7 @@
         'name' => 'hackbartpr/alura_5_challenge_backend',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '31beef5be65e29889e07daec0665cf6de25ff255',
+        'reference' => 'ea1a653f8b13f725ba1e50f4738b4c43a4eb8c22',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -46,6 +46,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'fakerphp/faker' => array(
+            'pretty_version' => 'v1.21.0',
+            'version' => '1.21.0.0',
+            'reference' => '92efad6a967f0b79c499705c69b662f738cc9e4d',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../fakerphp/faker',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'graham-campbell/result-type' => array(
             'pretty_version' => 'v1.1.1',
             'version' => '1.1.1.0',
@@ -85,7 +94,7 @@
         'hackbartpr/alura_5_challenge_backend' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '31beef5be65e29889e07daec0665cf6de25ff255',
+            'reference' => 'ea1a653f8b13f725ba1e50f4738b4c43a4eb8c22',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

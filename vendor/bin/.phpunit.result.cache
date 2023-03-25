@@ -1,1 +1,1 @@
-{"version":1,"defects":{"VideoTest::testShouldListOfVideos":8},"times":{"VideoTest::testShouldListOfVideos":0.018}}
+{"version":1,"defects":{"VideoTest::testShouldListOfVideos":8,"VideoTest::testShouldDeleteVideo":5,"VideoTest::testShouldNotDeleteVideo":7},"times":{"VideoTest::testShouldListOfVideos":0.016,"VideoTest::testShouldDeleteVideo":0.032,"VideoTest::testShouldNotDeleteVideo":0.005}}

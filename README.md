@@ -23,3 +23,4 @@
 - Utilizar Stream nas Responses
 - Dupla Validação, validações das Requisições nos Controllers e nas Requisições do Banco (PDO Bind Value)
 - Tests de Validação Utilizando PHPUnit
+- Utilizando Seeders e Fake Datas

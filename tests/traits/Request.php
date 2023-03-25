@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Traits;
+namespace HackbartPR\Tests\Traits;
 
 use GuzzleHttp\Client;
 use Nyholm\Psr7\ServerRequest;

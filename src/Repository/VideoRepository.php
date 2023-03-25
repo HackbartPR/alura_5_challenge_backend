@@ -62,4 +62,13 @@ class VideoRepository
         return $stmt->execute();
     }
 
+    public function showByUrl(string $url): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM videos WHERE url = ?");
+        $stmt->bindValue(1, $url);
+        $stmt->execute();
+
+        return $stmt->fetch(); 
+    }
+
 }

@@ -22,7 +22,13 @@ class DeleteVideoController extends Controller
             return new Response(400);
         }
 
-        [$id] = $validate;        
+        [$id] = $validate;
+        $video = $this->repository->show($id);
+        
+        if (empty($video)) {
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'User not found.']));
+        }
+        
         $isDeleted = $this->repository->delete($id);
         
         if (!$isDeleted) {

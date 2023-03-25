@@ -1,12 +1,13 @@
 <?php
 
-
-use Tests\Traits\Request;
 use PHPUnit\Framework\TestCase;
+use HackbartPR\Seeds\VideoSeed;
+use HackbartPR\Tests\Traits\Mock;
+use HackbartPR\Tests\Traits\Request;
 
 final class VideoTest extends TestCase
 {
-    use Request;
+    use Request, Mock;
 
     public function testShouldListOfVideos(): void
     {
@@ -20,6 +21,24 @@ final class VideoTest extends TestCase
 
     public function testShouldDeleteVideo(): void
     {
-        //Salvar um dado no banco, recuperar seu ID e deletá-lo
+        $seed = VideoSeed::create();
+        $repository = $this->getVideoRepository();
+        $repository->save($seed);
+        
+        $video = $repository->showByUrl($seed->url);
+
+        $request = $this->createRequest('DELETE', '/videos/' . $video['id']);
+        $response = $this->sendRequest($request);
+
+        $this->assertEquals(200, $response->getStatusCode());        
+    }
+
+    public function testShouldNotDeleteVideo(): void
+    {
+        $request = $this->createRequest('DELETE', '/videos/0');
+        $response = $this->sendRequest($request);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJson(json_encode(['error' => 'User not found.']));
     }
 }
