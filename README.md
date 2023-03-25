@@ -7,6 +7,8 @@
 - Criar a tabela Videos
 - Criar a requisição GET /videos 
 - Criar a Requisição POST /videos
+- Criar a Requisição DELETE /videos
+- Criar a Requisição PUT | PATCH /videos
 
 ## Objetivos Compridos - Proposto por mim (Até o momento)
 - Utilizar Arquitetura MVC
