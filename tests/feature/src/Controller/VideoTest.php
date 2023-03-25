@@ -17,4 +17,6 @@ final class VideoTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
     }
+
+    
 }

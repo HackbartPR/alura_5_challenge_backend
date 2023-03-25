@@ -17,8 +17,8 @@ class AllVideoController extends Controller
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $videoList = $this->repository->all();
-        $jsonResponse = ['contents'=>$videoList];
+        $body = json_encode(['contents'=>$videoList]);
 
-        return new Response(200, ['Content-Type' => 'application/json'], json_encode($jsonResponse));
+        return new Response(200, ['Content-Type' => 'application/json'], $body);
     }
 }

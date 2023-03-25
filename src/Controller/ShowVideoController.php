@@ -22,8 +22,9 @@ class ShowVideoController extends Controller
             return new Response(400);
         }
 
-        $video = $this->repository->show($id);        
-        return new Response(200, ['Content-Type' => 'application/json'], json_encode($video));
+        $video = $this->repository->show($id);
+        $body = json_encode(['contents'=>$video]);        
+        return new Response(200, ['Content-Type' => 'application/json'], $body);
     }
 
     private function validate(ServerRequestInterface $request): array|bool
