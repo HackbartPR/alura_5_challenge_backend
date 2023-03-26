@@ -24,69 +24,56 @@ final class CategoryTest extends TestCase
         return $body['contents'];
     }
 
-    /* public function testShouldNotInsertVideoWithoutDescription(): void
+    public function testShouldNotInsertCategoryWithoutTitle(): void
     {
-        $video = new Video(null, 'titulo de Teste', '', 'www.google.com');
+        $category = new Category(null, '', '#ffffff');
         
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
+        $request = $this->createRequest('POST', '/categorias', ['Content-Type' => 'application/json'], json_encode($category));
         $response = $this->sendRequest($request);
 
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+        $this->assertJson(json_encode(['error' => 'Category format is not allowed.']));
+    }
 
-    /* public function testShouldNotInsertVideoWithoutTitle(): void
+    public function testShouldNotInsertCategoryWithoutColor(): void
     {
-        $video = new Video(null, '', 'Descrição de Teste', 'www.google.com');
+        $category = new Category(null, 'Branco', '');
         
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
+        $request = $this->createRequest('POST', '/categorias', ['Content-Type' => 'application/json'], json_encode($category));
         $response = $this->sendRequest($request);
 
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+        $this->assertJson(json_encode(['error' => 'Category format is not allowed.']));
+    }
 
-    /* public function testShouldNotInsertVideoWithoutURL(): void
+    public function testShouldNotInsertCategoryWithWrongColor(): void
     {
-        $video = new Video(null, 'titulo de Teste', 'Descricao de teste', '');
+        $category = new Category(null, 'Branco', 'ffffff');
         
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
+        $request = $this->createRequest('POST', '/categorias', ['Content-Type' => 'application/json'], json_encode($category));
         $response = $this->sendRequest($request);
 
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
-
-    /* public function testShouldNotInsertVideoWithWrongURL(): void
-    {
-        $video = new Video(null, 'titulo de Teste', 'Descricao de teste', 'google.com');
-        
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
-        $response = $this->sendRequest($request);
-
-        $body = json_decode($response->getBody()->getContents(), true);
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+        $this->assertJson(json_encode(['error' => 'Category format is not allowed.']));
+    }
 
     /**
-     * @depends testShouldInsertVideo
+     * @depends testShouldInsertCategory
      */
-    /* public function testShouldNotInsertVideoWithURLDuplicated(array $seed): void
+    public function testShouldNotInsertVideoWithURLDuplicated(array $seed): void
     {
-        $video = new Video(null, 'titulo de Teste', 'Descricao de Teste', $seed['url']);
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
+        $category = new Category(null, 'titulo de Teste', $seed['color']);
+        $request = $this->createRequest('POST', '/categorias', ['Content-Type' => 'application/json'], json_encode($category));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'URL already exists.']));
-    } */ 
+        $this->assertJson(json_encode(['error' => 'Color already exists.']));
+    } 
 }
