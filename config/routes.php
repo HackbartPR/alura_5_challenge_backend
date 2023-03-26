@@ -26,7 +26,12 @@ return [
             'method'       => ['DELETE'], 
             'path_pattern' => '/^\/videos\/(?P<id>\d+)$/',
             'controller'   => \HackbartPR\Controller\DeleteVideoController::class
-        )
+        ),
+        array(
+            'method'       => ['POST'], 
+            'path_pattern' => '/^\/categorias$/',
+            'controller'   => \HackbartPR\Controller\NewCategoryController::class
+        ),
         
     ],
     \HackbartPR\Controller\NotFoundVideoController::class
