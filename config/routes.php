@@ -32,7 +32,21 @@ return [
             'path_pattern' => '/^\/categorias$/',
             'controller'   => \HackbartPR\Controller\NewCategoryController::class
         ),
-        
+        array(
+            'method'       => ['GET'], 
+            'path_pattern' => '/^\/categorias/',
+            'controller'   => \HackbartPR\Controller\AllCategoryController::class
+        ),
+        array(
+            'method'       => ['GET'],
+            'path_pattern' => '/^\/categorias\/(?P<id>\d+)$/',
+            'controller'   => \HackbartPR\Controller\ShowCategoryController::class
+        ),
+        array(
+            'method'       => ['PUT', 'PATCH'], 
+            'path_pattern' => '/^\/categorias\/(?P<id>\d+)$/',
+            'controller'   => \HackbartPR\Controller\UpdateCategoryController::class
+        )        
     ],
     \HackbartPR\Controller\NotFoundVideoController::class
 ];
