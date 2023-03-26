@@ -3,9 +3,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 //Mostrar mensagens de Debug
-ini_set('display_errors', 1);
+/* ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL); */
 
 use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
@@ -20,7 +20,6 @@ $routes = require_once __DIR__ . '/../config/routes.php';
 //Criando Controller
 $class = \HackbartPR\Config\Router::route($routes);
 $controller = $diContainer->get($class);
-
 
 // Criando um objeto HTTP Request (PSR7) utilizando a fabrica de objeto (PSR 17)
 $psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();

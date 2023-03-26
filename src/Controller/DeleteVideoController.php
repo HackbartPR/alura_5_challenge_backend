@@ -26,7 +26,7 @@ class DeleteVideoController extends Controller
         $video = $this->repository->show($id);
         
         if (empty($video)) {
-            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'User not found.']));
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Video not found.']));
         }
         
         $isDeleted = $this->repository->delete($id);

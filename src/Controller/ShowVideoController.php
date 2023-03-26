@@ -18,7 +18,7 @@ class ShowVideoController extends Controller
     {
         [$id] = $this->validate($request); 
 
-        if (!$id) {
+        if (is_bool($id)) {
             return new Response(400);
         }
 
@@ -33,7 +33,7 @@ class ShowVideoController extends Controller
         $id = $this->getQueryParam($uri);
         $id = filter_var($id, FILTER_VALIDATE_INT);
 
-        if (empty($id)) {
+        if (is_bool($id)) {
             return false;
         }
 

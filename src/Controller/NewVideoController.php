@@ -26,7 +26,6 @@ class NewVideoController extends Controller
         [$title, $description, $url] = $validate;
 
         $isExist = $this->repository->showByUrl($url);
-
         if (!is_bool($isExist)) {
             return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'URL already exists.']));
         }

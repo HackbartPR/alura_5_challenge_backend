@@ -21,10 +21,21 @@ class UpdateVideoController extends Controller
         $validate = $this->validate($request); 
 
         if (!$validate) {
-            return new Response(400);
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Video format is not allowed.']));
         }
 
         [$id, $title, $description, $url] = $validate;
+        
+        $video = $this->repository->show($id);
+        if (is_bool($video)) {
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Video not found.']));
+        }
+
+        $isExist = $this->repository->showByUrl($url);
+        if (!is_bool($isExist) && $isExist['id'] !== $id) {
+            return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'URL already exists.']));
+        }
+
         $video = new Video($id, $title, $description, $url);
         $isUpdated = $this->repository->save($video);
         
@@ -33,7 +44,7 @@ class UpdateVideoController extends Controller
         }
 
         $body = json_encode(['contents'=>$video]); 
-        return new Response(201, ['Content-Type' => 'application/json'], $body);
+        return new Response(200, ['Content-Type' => 'application/json'], $body);
     }
 
     private function validate(ServerRequestInterface $request): array|bool
