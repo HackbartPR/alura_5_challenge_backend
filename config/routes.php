@@ -46,6 +46,11 @@ return [
             'method'       => ['PUT', 'PATCH'], 
             'path_pattern' => '/^\/categorias\/(?P<id>\d+)$/',
             'controller'   => \HackbartPR\Controller\UpdateCategoryController::class
+        ),
+        array(
+            'method'       => ['DELETE'], 
+            'path_pattern' => '/^\/categorias\/(?P<id>\d+)$/',
+            'controller'   => \HackbartPR\Controller\DeleteCategoryController::class
         )        
     ],
     \HackbartPR\Controller\NotFoundVideoController::class

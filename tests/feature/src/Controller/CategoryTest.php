@@ -215,4 +215,27 @@ final class CategoryTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
     }
+
+
+
+    //DELETE METHODS
+    /**
+     * @depends testShouldInsertCategory
+     */
+    public function testShouldDeleteCategory(array $seed): void
+    {                
+        $request = $this->createRequest('DELETE', '/categorias/' . $seed['id']);
+        $response = $this->sendRequest($request);
+
+        $this->assertEquals(200, $response->getStatusCode());        
+    }
+
+    public function testShouldNotDeleteCategory(): void
+    {
+        $request = $this->createRequest('DELETE', '/categorias/0');
+        $response = $this->sendRequest($request);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJson(json_encode(['error' => 'Category not found.']));
+    }
 }
