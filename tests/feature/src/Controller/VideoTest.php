@@ -204,8 +204,7 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('contents', $body);
         $this->assertEquals('Titulo de Teste Updated', $body['contents']['title']);
     }
-    
-
+ 
 
 
     //SHOW METHODS
@@ -243,7 +242,7 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('contents', $body);
     }
 
-    
+
 
     //DELETE METHODS
     /**
@@ -265,6 +264,4 @@ final class VideoTest extends TestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video not found.']));
     }
-
-    
 }
