@@ -18,7 +18,7 @@ final class CategoriesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('categories');
+        $table = $this->table('categories', ['signed' => true]);
         $table->addColumn('title', 'string', ['limit' => 254])
               ->addColumn('color', 'string', ['limit' => 9])              
               ->create();

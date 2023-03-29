@@ -2,9 +2,11 @@
 
 namespace HackbartPR\Controller;
 
+use HackbartPR\Entity\Category;
 use Nyholm\Psr7\Response;
 use HackbartPR\Entity\Video;
 use HackbartPR\Entity\Controller;
+use HackbartPR\Repository\CategoryRepository;
 use Psr\Http\Message\ResponseInterface;
 use HackbartPR\Repository\VideoRepository;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,7 +14,8 @@ use Psr\Http\Message\ServerRequestInterface;
 class NewVideoController extends Controller
 {
     public function __construct(
-        private VideoRepository $repository
+        private VideoRepository $repository,
+        private CategoryRepository $categoryRepository
     ){}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -23,14 +26,19 @@ class NewVideoController extends Controller
             return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Video format is not allowed.']));
         }
 
-        [$title, $description, $url] = $validate;
+        [$title, $description, $url, $category] = $validate;
 
         $isExist = $this->repository->showByUrl($url);
         if (!is_bool($isExist)) {
             return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'URL already exists.']));
         }
 
-        $video = new Video(null, $title, $description, $url);
+        if (is_null($category)) {
+            $ctg = $this->categoryRepository->show(1);
+            $category = new Category($ctg['id'], $ctg['title'], $ctg['color']);                            
+        }
+
+        $video = new Video(null, $title, $description, $url, $category);
         $isSaved = $this->repository->save($video); 
 
         if (!$isSaved) {
@@ -55,10 +63,15 @@ class NewVideoController extends Controller
         $description = filter_var($body['description'], FILTER_DEFAULT);
         $url = filter_var($body['url'], FILTER_VALIDATE_URL);
 
+        $category = null;
+        if (isset($body['categoryid'])) {
+            $category = filter_var($body['categoryid'], FILTER_VALIDATE_INT);            
+        }
+
         if (empty($title) || empty($description) || empty($url)) {
             return false;
         }
 
-        return [$title, $description, $url];
+        return [$title, $description, $url, $category];
     }
 }

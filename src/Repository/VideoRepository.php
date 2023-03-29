@@ -32,10 +32,11 @@ class VideoRepository
 
     private function add(Video $video): bool
     {
-        $stmt = $this->pdo->prepare("INSERT INTO videos (title, description, url) VALUES (:title, :desc, :url);");
+        $stmt = $this->pdo->prepare("INSERT INTO videos (title, description, url, category_id) VALUES (:title, :desc, :url, :ctg);");
         $stmt->bindValue(':title', $video->title, FILTER_DEFAULT);
         $stmt->bindValue(":desc", $video->description, FILTER_DEFAULT);
         $stmt->bindValue(":url", $video->url, FILTER_VALIDATE_URL);
+        $stmt->bindValue(":ctg", $video->category->id(), FILTER_VALIDATE_INT);
 
         return $stmt->execute();        
     }

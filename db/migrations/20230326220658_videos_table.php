@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class VideosTableMigration extends AbstractMigration
+final class VideosTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -22,6 +22,8 @@ final class VideosTableMigration extends AbstractMigration
         $table->addColumn('title', 'string', ['limit' => 254])
               ->addColumn('description', 'string', ['limit' => 254])
               ->addColumn('url', 'string', ['limit' => 254])
+              ->addColumn('category_id', 'integer', ['limit' => 10])
+              ->addForeignKey('category_id', 'categories', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
               ->create();        
     }
 }
