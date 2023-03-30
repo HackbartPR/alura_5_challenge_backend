@@ -49,7 +49,11 @@ class VideoRepository
 
     public function show(int $id): array|bool
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM videos WHERE id = ?");
+        $query = "SELECT *, CTG.title AS 'ctg_title', CTG.color FROM videos 
+        INNER JOIN categories CTG ON videos.category_id = CTG.id
+        WHERE id = ?";
+
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindValue(1, $id);
         $stmt->execute();
 
@@ -65,11 +69,36 @@ class VideoRepository
 
     public function showByUrl(string $url): array|bool
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM videos WHERE url = ?");
+        $query = "SELECT *, CTG.title AS 'ctg_title', CTG.color FROM videos 
+        INNER JOIN categories CTG ON videos.category_id = CTG.id
+        WHERE url = ?";
+
+        $stmt = $this->pdo->prepare($query);
         $stmt->bindValue(1, $url);
         $stmt->execute();
 
-        return $stmt->fetch(); 
+        $response = $stmt->fetch();
+
+        if (!$response) {
+            return $response;
+        }
+
+        return $this->hydrateVideoArray($response); 
+    }
+
+    private function hydrateVideoArray(array $video): array
+    {
+        return [
+            'id' => $video['id'],
+            'title' => $video['title'],
+            'description' => $video['description'],
+            'url' => $video['url'],
+            'category' => [
+                'id' => $video['category_id'],
+                'title' => $video['ctg_title'],
+                'color' => $video['color']
+            ]
+        ];
     }
 
 }

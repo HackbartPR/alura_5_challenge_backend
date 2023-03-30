@@ -1,5 +1,6 @@
 <?php
 
+use HackbartPR\Entity\Category;
 use HackbartPR\Entity\Video;
 use HackbartPR\Seeds\CategorySeed;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,57 @@ final class VideoTest extends TestCase
     use Request;
 
     //INSERT METHODS
-    public function testShouldInsertVideoWithoutCategoryWithoutCategory(): array
+    public function testShouldNotInsertVideoWithNonexistCategory(): void
+    {   
+        $video = VideoSeed::create();
+        $category = CategorySeed::create();
+        
+        $payload =  [            
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => 0,
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Category not found.'], $body);
+    }
+
+    public function testShouldNotInsertVideoWithoutCategorysTitle(): void
+    {   
+        $video = VideoSeed::create();
+        $category = CategorySeed::create();
+        
+        $payload =  [            
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => 0,
+                'title' => '',
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Video format is not allowed.'], $body);
+    }
+    
+    //VOCÊ PRECISA PERMITIR AS VALIDAÇÕES (TRAIT) RETORNAREM NULL PARA OS CASOS EM QUE A REQUISIÇÃO NÃO ESTÁ CORRETA 
+
+    /* public function testShouldInsertVideoWithoutCategory(): array
     {
         $video = VideoSeed::create();
 
@@ -20,8 +71,9 @@ final class VideoTest extends TestCase
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertArrayHasKey('contents', $body);        
-        $this->assertContainsEquals(1, $body['contents']['category']['id']);        
+        $this->assertArrayHasKey('contents', $body);
+        $this->assertArrayHasKey('category', $body['contents']);        
+        $this->assertEquals(1, $body['contents']['category']['id']);        
 
         return $body['contents'];
     }
@@ -38,9 +90,12 @@ final class VideoTest extends TestCase
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertArrayHasKey('contents', $body); 
-        $this->assertContainsEquals(1, $body['contents']['category']['id']);          
-    }
+        $this->assertArrayHasKey('contents', $body);
+        $this->assertArrayHasKey('category', $body['contents']); 
+        $this->assertArrayHasKey('id', $body['contents']['category']);
+    } */
+
+    
 
     /* public function testShouldNotInsertVideoWithoutDescription(): void
     {

@@ -10,9 +10,12 @@ use HackbartPR\Repository\CategoryRepository;
 use Psr\Http\Message\ResponseInterface;
 use HackbartPR\Repository\VideoRepository;
 use Psr\Http\Message\ServerRequestInterface;
+use HackbartPR\Traits\Validations;
 
 class NewVideoController extends Controller
 {
+    use Validations;
+
     public function __construct(
         private VideoRepository $repository,
         private CategoryRepository $categoryRepository
@@ -28,16 +31,24 @@ class NewVideoController extends Controller
 
         [$title, $description, $url, $category] = $validate;
 
-        $isExist = $this->repository->showByUrl($url);
-        if (!is_bool($isExist)) {
+        $video = $isUrlExists = $this->repository->showByUrl($url);
+        if (!is_bool($isUrlExists)) {
             return new Response(400, ['Content-Type' => 'application/json'] , json_encode(['error' => 'URL already exists.']));
-        }
-
+        }         
+        
         if (is_null($category)) {
             $ctg = $this->categoryRepository->show(1);
-            $category = new Category($ctg['id'], $ctg['title'], $ctg['color']);                            
-        }
+            $category = new Category($ctg['id'], $ctg['title'], $ctg['color']); 
 
+        } else {
+            $ctg = $this->categoryRepository->show($category['id']);
+            if (!$ctg) {
+                return new Response(404, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Category not found.']));
+            }
+
+            $category = new Category($ctg['id'], $ctg['title'], $ctg['color']); 
+        }
+        
         $video = new Video(null, $title, $description, $url, $category);
         $isSaved = $this->repository->save($video); 
 
@@ -55,23 +66,6 @@ class NewVideoController extends Controller
         $body = $request->getBody()->getContents();
         $body = json_decode($body, true);
         
-        if (!isset($body['title']) || !isset($body['description']) || !isset($body['url']) ) {
-            return false;
-        }
-
-        $title = filter_var($body['title'], FILTER_DEFAULT);
-        $description = filter_var($body['description'], FILTER_DEFAULT);
-        $url = filter_var($body['url'], FILTER_VALIDATE_URL);
-
-        $category = null;
-        if (isset($body['categoryid'])) {
-            $category = filter_var($body['categoryid'], FILTER_VALIDATE_INT);            
-        }
-
-        if (empty($title) || empty($description) || empty($url)) {
-            return false;
-        }
-
-        return [$title, $description, $url, $category];
+        return $this->videoValidation($body);
     }
 }
