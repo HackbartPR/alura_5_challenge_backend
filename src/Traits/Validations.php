@@ -6,46 +6,6 @@ use HackbartPR\Entity\Category;
 
 trait Validations
 {
-    private function videoValidation(array $body): array|bool
-    {
-        if (!isset($body['title']) || !isset($body['description']) || !isset($body['url']) ) {
-            return false;
-        }
-
-        [$title, $description, $url] = $this->videoFilterValidation($body, false);
-        
-        if (empty($title) || empty($description) || empty($url)) {
-            return false;
-        }
-
-        $category = null;
-        if (isset($body['category'])) {
-            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);            
-        }
-
-        return [$title, $description, $url, $category];
-    }
-
-    /* private function categoryValidation(array $body): array|bool
-    {
-        if (!isset($body['title']) || !isset($body['color'])) {
-            return false;
-        }
-        
-        $title = filter_var($body['title'], FILTER_DEFAULT);
-        $color = filter_var($body['color'], FILTER_DEFAULT);
-
-        if (empty($title) || empty($color)) {
-            return false;
-        }
-
-        if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) {
-            return false;
-        }
-
-        return [$title, $color];
-    } */
-
     private function videoFilterValidation(array $body, bool $hasId): array
     {
         $title = filter_var($body['title'], FILTER_DEFAULT);

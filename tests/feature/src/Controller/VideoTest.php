@@ -106,9 +106,7 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertEquals(['error' => 'Category not found.'], $body);
-    }
-    
-    //VOCÊ PRECISA PERMITIR AS VALIDAÇÕES (TRAIT) RETORNAREM NULL PARA OS CASOS EM QUE A REQUISIÇÃO NÃO ESTÁ CORRETA 
+    }    
 
     public function testShouldInsertVideoWithoutCategory(): array
     {

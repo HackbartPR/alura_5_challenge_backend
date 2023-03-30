@@ -2,15 +2,18 @@
 
 namespace HackbartPR\Controller;
 
+use Nyholm\Psr7\Response;
 use HackbartPR\Entity\Category;
 use HackbartPR\Entity\Controller;
+use HackbartPR\Traits\Validations;
 use Psr\Http\Message\ResponseInterface;
 use HackbartPR\Repository\CategoryRepository;
-use Nyholm\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
 class NewCategoryController extends Controller
 {
+    use Validations;
+    
     public function __construct(
         private CategoryRepository $repository
     ){}
@@ -50,10 +53,9 @@ class NewCategoryController extends Controller
         if (!isset($body['title']) || !isset($body['color'])) {
             return false;
         }
-
-        $title = filter_var($body['title'], FILTER_DEFAULT);
-        $color = filter_var($body['color'], FILTER_DEFAULT);
-
+        
+        [$title, $color] = $this->categoryFilterValidation($body, false);
+        
         if (empty($title) || empty($color)) {
             return false;
         }

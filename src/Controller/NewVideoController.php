@@ -2,15 +2,15 @@
 
 namespace HackbartPR\Controller;
 
-use HackbartPR\Entity\Category;
 use Nyholm\Psr7\Response;
 use HackbartPR\Entity\Video;
+use HackbartPR\Entity\Category;
 use HackbartPR\Entity\Controller;
-use HackbartPR\Repository\CategoryRepository;
+use HackbartPR\Traits\Validations;
 use Psr\Http\Message\ResponseInterface;
 use HackbartPR\Repository\VideoRepository;
 use Psr\Http\Message\ServerRequestInterface;
-use HackbartPR\Traits\Validations;
+use HackbartPR\Repository\CategoryRepository;
 
 class NewVideoController extends Controller
 {
@@ -66,6 +66,21 @@ class NewVideoController extends Controller
         $body = $request->getBody()->getContents();
         $body = json_decode($body, true);
         
-        return $this->videoValidation($body);
+        if (!isset($body['title']) || !isset($body['description']) || !isset($body['url']) ) {
+            return false;
+        }
+
+        [$title, $description, $url] = $this->videoFilterValidation($body, false);
+        
+        if (empty($title) || empty($description) || empty($url)) {
+            return false;
+        }
+
+        $category = null;
+        if (isset($body['category'])) {
+            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);            
+        }
+
+        return [$title, $description, $url, $category];
     }
 }
