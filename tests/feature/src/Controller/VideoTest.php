@@ -57,12 +57,60 @@ final class VideoTest extends TestCase
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals(['error' => 'Video format is not allowed.'], $body);
+        $this->assertEquals(['error' => 'Category not found.'], $body);
+    }
+
+    public function testShouldNotInsertVideoWithoutCategorysColor(): void
+    {   
+        $video = VideoSeed::create();
+        $category = CategorySeed::create();
+        
+        $payload =  [            
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => 0,
+                'title' => $category->title,
+                'color' => ''
+            ]
+        ];
+
+        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Category not found.'], $body);
+    }
+
+    public function testShouldNotInsertVideoWithoutIdCategoryEvenCategoryHasTitleAndColor(): void
+    {   
+        $video = VideoSeed::create();
+        $category = CategorySeed::create();
+        
+        $payload =  [            
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => '',
+                'title' => $category->title,
+                'color' => $category->color,
+            ]
+        ];
+
+        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Category not found.'], $body);
     }
     
     //VOCÊ PRECISA PERMITIR AS VALIDAÇÕES (TRAIT) RETORNAREM NULL PARA OS CASOS EM QUE A REQUISIÇÃO NÃO ESTÁ CORRETA 
 
-    /* public function testShouldInsertVideoWithoutCategory(): array
+    public function testShouldInsertVideoWithoutCategory(): array
     {
         $video = VideoSeed::create();
 
@@ -81,11 +129,18 @@ final class VideoTest extends TestCase
     public function testShouldInsertVideoWithCategory(): void
     {
         $video = VideoSeed::create();
-        $category = CategorySeed::create();
+        $payload =  [            
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => 1,
+                'title' => 'Livre',
+                'color' => '#32CD32'
+            ]
+        ];
 
-        $video->addCategory($category);
-
-        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
+        $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
@@ -93,11 +148,10 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('contents', $body);
         $this->assertArrayHasKey('category', $body['contents']); 
         $this->assertArrayHasKey('id', $body['contents']['category']);
-    } */
-
+        $this->assertequals(1, $body['contents']['category']['id']);        
+    }
     
-
-    /* public function testShouldNotInsertVideoWithoutDescription(): void
+    public function testShouldNotInsertVideoWithoutDescription(): void
     {
         $video = new Video(null, 'titulo de Teste', '', 'www.google.com', null);
         
@@ -108,9 +162,9 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
-    /* public function testShouldNotInsertVideoWithoutTitle(): void
+    public function testShouldNotInsertVideoWithoutTitle(): void
     {
         $video = new Video(null, '', 'Descrição de Teste', 'www.google.com', null);
         
@@ -121,9 +175,9 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
-    /* public function testShouldNotInsertVideoWithoutURL(): void
+    public function testShouldNotInsertVideoWithoutURL(): void
     {
         $video = new Video(null, 'titulo de Teste', 'Descricao de teste', '', null);
         
@@ -134,9 +188,9 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
-    /* public function testShouldNotInsertVideoWithWrongURL(): void
+    public function testShouldNotInsertVideoWithWrongURL(): void
     {
         $video = new Video(null, 'titulo de Teste', 'Descricao de teste', 'google.com', null);
         
@@ -147,12 +201,12 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldNotInsertVideoWithURLDuplicated(array $seed): void
+    public function testShouldNotInsertVideoWithURLDuplicated(array $seed): void
     {
         $video = new Video(null, 'titulo de Teste', 'Descricao de Teste', $seed['url'], null);
         $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($video));
@@ -161,7 +215,7 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'URL already exists.']));
-    } */ 
+    } 
 
 
 

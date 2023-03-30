@@ -41,7 +41,7 @@ class NewVideoController extends Controller
             $category = new Category($ctg['id'], $ctg['title'], $ctg['color']); 
 
         } else {
-            $ctg = $this->categoryRepository->show($category['id']);
+            $ctg = $this->categoryRepository->show($category[0]);
             if (!$ctg) {
                 return new Response(404, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Category not found.']));
             }
