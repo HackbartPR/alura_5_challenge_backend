@@ -28,6 +28,8 @@ final class VideoTest extends TestCase
             ]
         ];
 
+        $test = json_encode($payload);
+
         $request = $this->createRequest('POST', '/videos', ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
@@ -543,7 +545,7 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('contents', $body);
     }
 
-    /* public function testShouldListOfVideos(): void
+    public function testShouldListOfVideos(): void
     {
         $request = $this->createRequest('GET', '/videos');
         $response = $this->sendRequest($request);
@@ -551,7 +553,18 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
-    } */
+    }
+
+    public function testShouldShowAListOfVideosFromSpecificCategory(): void
+    {
+        $request = $this->createRequest('GET', '/categorias/1/videos');
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('contents', $body);
+        $this->assertArrayHasKey('contents', $body);
+    }
 
 
 
@@ -559,20 +572,20 @@ final class VideoTest extends TestCase
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldDeleteVideo(array $seed): void
+    public function testShouldDeleteVideo(array $seed): void
     {                
         $request = $this->createRequest('DELETE', '/videos/' . $seed['id']);
         $response = $this->sendRequest($request);
 
         $this->assertEquals(200, $response->getStatusCode());        
-    } */
+    }
 
-    /* public function testShouldNotDeleteVideo(): void
+    public function testShouldNotDeleteVideo(): void
     {
         $request = $this->createRequest('DELETE', '/videos/0');
         $response = $this->sendRequest($request);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video not found.']));
-    } */
+    }
 }

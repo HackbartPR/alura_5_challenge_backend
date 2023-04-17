@@ -3,6 +3,7 @@
 namespace HackbartPR\Repository;
 
 use HackbartPR\Entity\Video;
+use LDAP\Result;
 
 class VideoRepository
 {
@@ -86,6 +87,25 @@ class VideoRepository
         return $this->hydrateVideoArray($response); 
     }
 
+    public function showVideosByCategory(int $id): array|bool
+    {
+        $query = "SELECT videos.*, CTG.title AS 'ctg_title', CTG.color FROM videos
+        INNER JOIN categories CTG ON CTG.id = videos.category_id
+        WHERE CTG.id = ?";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(1, $id, FILTER_VALIDATE_INT);
+        $stmt->execute();
+
+        $response = $stmt->fetchAll();
+
+        if (!$response) {
+            return $response;
+        }
+
+        return $this->hydrateListVideoArray($response); 
+    }
+
     private function hydrateVideoArray(array $video): array
     {
         return [
@@ -99,6 +119,26 @@ class VideoRepository
                 'color' => $video['color']
             ]
         ];
+    }
+
+    private function hydrateListVideoArray(array $videos): array
+    {
+        $result = [];
+        foreach ($videos as $video) {
+            $result[] = [
+                'id' => $video['id'],
+                'title' => $video['title'],
+                'description' => $video['description'],
+                'url' => $video['url'],
+                'category' => [
+                    'id' => $video['category_id'],
+                    'title' => $video['ctg_title'],
+                    'color' => $video['color']
+                ]
+            ];
+        }
+
+        return $result;
     }
 
 }

@@ -10,13 +10,6 @@ abstract class Controller implements RequestHandlerInterface
 {   
     protected function getQueryParam(string $uri): string|bool
     {
-        $uriArray = explode('/', $uri);
-        $uriArray = array_filter($uriArray, 'strlen');
-
-        if (count($uriArray) > 2) {
-            return false;
-        }
-
-        return end($uriArray);
-    }
+        return filter_var($uri, FILTER_SANITIZE_NUMBER_INT);
+    }    
 }

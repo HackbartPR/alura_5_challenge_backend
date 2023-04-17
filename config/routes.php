@@ -51,7 +51,12 @@ return [
             'method'       => ['DELETE'], 
             'path_pattern' => '/^\/categorias\/(?P<id>\d+)$/',
             'controller'   => \HackbartPR\Controller\DeleteCategoryController::class
-        )        
+        ),
+        array(
+            'method'       => ['GET'],
+            'path_pattern' => '/^\/categorias\/(?P<id>\d+)\/videos/',
+            'controller'   => \HackbartPR\Controller\ShowVideosByCategoryController::class
+        ),        
     ],
     \HackbartPR\Controller\NotFoundVideoController::class
 ];
