@@ -27,7 +27,7 @@ class VideoRepository
         $stmt->bindValue(":desc", $video->description, FILTER_DEFAULT);
         $stmt->bindValue(":url", $video->url, FILTER_VALIDATE_URL);
         
-        return $stmt->execute();;
+        return $stmt->execute();
     }
 
     private function add(Video $video): bool
@@ -49,9 +49,9 @@ class VideoRepository
 
     public function show(int $id): array|bool
     {
-        $query = "SELECT *, CTG.title AS 'ctg_title', CTG.color FROM videos 
+        $query = "SELECT videos.*, CTG.title AS 'ctg_title', CTG.color FROM videos 
         INNER JOIN categories CTG ON videos.category_id = CTG.id
-        WHERE id = ?";
+        WHERE videos.id = ?";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue(1, $id);
@@ -69,7 +69,7 @@ class VideoRepository
 
     public function showByUrl(string $url): array|bool
     {
-        $query = "SELECT *, CTG.title AS 'ctg_title', CTG.color FROM videos 
+        $query = "SELECT videos.*, CTG.title AS 'ctg_title', CTG.color FROM videos 
         INNER JOIN categories CTG ON videos.category_id = CTG.id
         WHERE url = ?";
 

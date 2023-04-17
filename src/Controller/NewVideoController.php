@@ -57,6 +57,7 @@ class NewVideoController extends Controller
         }
         
         $saved = $this->repository->showByUrl($url);
+
         $body = json_encode(['contents'=>$saved]);
         return new Response(201, ['Content-Type' => 'application/json'], $body);
     }
@@ -78,7 +79,11 @@ class NewVideoController extends Controller
 
         $category = null;
         if (isset($body['category'])) {
-            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);            
+            if (empty($body['category']['title']) || empty($body['category']['color'])) {
+                return false;
+            }
+            
+            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);                        
         }
 
         return [$title, $description, $url, $category];

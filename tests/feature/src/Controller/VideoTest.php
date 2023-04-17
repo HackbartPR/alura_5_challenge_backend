@@ -56,8 +56,8 @@ final class VideoTest extends TestCase
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals(['error' => 'Category not found.'], $body);
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Video format is not allowed.'], $body);
     }
 
     public function testShouldNotInsertVideoWithoutCategorysColor(): void
@@ -80,8 +80,8 @@ final class VideoTest extends TestCase
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertEquals(['error' => 'Category not found.'], $body);
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Video format is not allowed.'], $body);
     }
 
     public function testShouldNotInsertVideoWithoutIdCategoryEvenCategoryHasTitleAndColor(): void
@@ -221,119 +221,305 @@ final class VideoTest extends TestCase
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldNotUpdateVideoWithoutTitlePatchMethod(array $seed): void
+    public function testShouldNotUpdateVideoWithoutTitlePatchMethod(array $seed): void
     {
-        $video = new Video($seed['id'], '', 'Descricao de Teste', $seed['url'], $seed['category']);
-        $request = $this->createRequest('PATCH', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], '', 'Descricao de Teste', $seed['url'], $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PATCH', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldNotUpdateVideoWithoutTitle(array $seed): void
+    public function testShouldNotUpdateVideoWithoutTitle(array $seed): void
     {
-        $video = new Video($seed['id'], '', $seed['description'], $seed['url'], $seed['category']);
-        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], '', $seed['description'], $seed['url'], $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
+    }
 
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldNotUpdateVideoWithoutDescription(array $seed): void
+    public function testShouldNotUpdateVideoWithoutDescription(array $seed): void
     {
-        $video = new Video($seed['id'], $seed['title'], '', $seed['url'], $seed['category']);
-        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
-        $response = $this->sendRequest($request);
-        $body = json_decode($response->getBody()->getContents(), true);
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
-
-    /**
-     * @depends testShouldInsertVideoWithoutCategory
-     */
-    /* public function testShouldNotUpdateVideoWithoutURL(array $seed): void
-    {
-        $video = new Video($seed['id'], $seed['title'], $seed['description'], '', $seed['category']);
-        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
-        $response = $this->sendRequest($request);
-        $body = json_decode($response->getBody()->getContents(), true);
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
-
-    /**
-     * @depends testShouldInsertVideoWithoutCategory
-     */
-    /* public function testShouldNotUpdateVideoWrongURLFormat(array $seed): void
-    {
-        $video = new Video($seed['id'], $seed['title'], $seed['description'], 'google.com');
-        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
-        $response = $this->sendRequest($request);
-        $body = json_decode($response->getBody()->getContents(), true);
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
-    } */
-
-    /**
-     * @depends testShouldInsertVideoWithoutCategory
-     */
-    /* public function testShouldNotUpdateVideoWithURLDuplicated(array $seed): void
-    {
-        $newVideo = $this->testShouldInsertVideoWithoutCategory();
-        $video = new Video($newVideo['id'], 'Titulo de Teste', 'Descricao de Teste', $seed['url']);
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], $seed['title'], '', $seed['url'], $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
         
-        $request = $this->createRequest('PUT', '/videos/' . $newVideo['id'], ['Content-Type' => 'application/json'], json_encode($video));
+        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
+    }
+
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldNotUpdateVideoWithoutURL(array $seed): void
+    {
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], $seed['title'], $seed['description'], '', $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
+    }
+
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldNotUpdateVideoWrongURLFormat(array $seed): void
+    {
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], $seed['title'], $seed['description'], 'google.com', $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJson(json_encode(['error' => 'Video format is not allowed.']));
+    }
+
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldNotUpdateVideoWithURLDuplicated(array $seed): void
+    {   
+        $newVideo = $this->testShouldInsertVideoWithoutCategory();
+        $category = new Category($newVideo['category']['id'], $newVideo['category']['title'], $newVideo['category']['color']);
+        $video = new Video($newVideo['id'], 'Titulo de Teste', 'Descricao de Teste', $seed['url'], $category);
+
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $payload['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);                                                                       
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'URL already exists.']));
-    } */
+    }
 
-    /* public function testShouldNotUpdateVideoWhichNotExist(): void
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldNotUpdateVideoWhichNotExist(array $seed): void
     {
-        $video = new Video(0, 'Titulo de Teste', 'Descricao de Teste', 'http://www.google.com');
-        $request = $this->createRequest('PUT', '/videos/0', ['Content-Type' => 'application/json'], json_encode($video));
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video(0, 'Titulo de Teste', 'Descricao de Teste', 'http://www.google.com', $category);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/0', ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertJson(json_encode(['error' => 'Video not found.']));
-    } */
+    }
+        
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldNotUpdateVideoWithoutCategorysTitle(array $seed): void
+    {
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], 'Titulo de Teste Updated', $seed['description'], $seed['url'], $category);        
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => '',
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $payload['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Video format is not allowed.'], $body); 
+    }
 
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldUpdateVideo(array $seed): void
+    public function testShouldNotUpdateVideoWithoutCategorysColor(array $seed): void
     {
-        $video = new Video($seed['id'], 'Titulo de Teste Updated', $seed['description'], $seed['url']);
-        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($video));
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], 'Titulo de Teste Updated', $seed['description'], $seed['url'], $category);        
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => ''
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $payload['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertEquals(['error' => 'Video format is not allowed.'], $body); 
+    }
+
+    /**
+     * @depends testShouldInsertVideoWithoutCategory
+     */
+    public function testShouldUpdateVideo(array $seed): void
+    {   
+        $category = new Category($seed['category']['id'], $seed['category']['title'], $seed['category']['color']);
+        $video = new Video($seed['id'], 'Titulo de Teste Updated', $seed['description'], $seed['url'], $category);        
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $seed['id'], ['Content-Type' => 'application/json'], json_encode($payload));
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
         $this->assertEquals('Titulo de Teste Updated', $body['contents']['title']);
-    } */
+    }
+
+    public function testShouldUpdateVideoWithoutCategory(): void
+    {
+        $newVideo = $this->testShouldInsertVideoWithoutCategory();        
+        $video = new Video($newVideo['id'], 'Alterando o Titulo', $newVideo['description'], $newVideo['url'], null);
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url
+        ];
+
+        $request = $this->createRequest('PUT', '/videos/' . $payload['id'], ['Content-Type' => 'application/json'], json_encode($payload));
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('contents', $body);
+        $this->assertArrayHasKey('category', $body['contents']);        
+        $this->assertEquals(1, $body['contents']['category']['id']); 
+    }
+
+    
+
+    
  
 
 
     //SHOW METHODS
-    /* public function testShouldShowVideoWithFalseContents(): void
+    public function testShouldShowVideoWithFalseContents(): void
     {
         $request = $this->createRequest('GET', '/videos/0');
         $response = $this->sendRequest($request);
@@ -342,12 +528,12 @@ final class VideoTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
         $this->assertEquals(false, $body['contents']);
-    } */
+    }
     
     /**
      * @depends testShouldInsertVideoWithoutCategory
      */
-    /* public function testShouldShowVideo(array $seed): void
+    public function testShouldShowVideo(array $seed): void
     {
         $request = $this->createRequest('GET', '/videos/' . $seed['id']);
         $response = $this->sendRequest($request);
@@ -355,7 +541,7 @@ final class VideoTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
-    } */
+    }
 
     /* public function testShouldListOfVideos(): void
     {

@@ -62,7 +62,19 @@ class UpdateVideoController extends Controller
             return new Response(400);
         }
 
-        $body = json_encode(['contents'=>$video]); 
+        $payload =  [     
+            'id' => $video->id(),
+            'title' => $video->title,
+            'description' => $video->description,
+            'url' => $video->url,
+            'category' => [
+                'id' => $category->id(),
+                'title' => $category->title,
+                'color' => $category->color
+            ]
+        ];
+
+        $body = json_encode(['contents'=>$payload]); 
         return new Response(200, ['Content-Type' => 'application/json'], $body);
     }
 
@@ -87,7 +99,11 @@ class UpdateVideoController extends Controller
 
         $category = null;
         if (isset($body['category'])) {
-            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);            
+            if (empty($body['category']['title']) || empty($body['category']['color'])) {
+                return false;
+            }
+
+            $category = ['id' => $ctgId,'title' => $ctgTitle,'color' => $ctgColor] = $this->categoryFilterValidation($body['category'], true);                                    
         }
 
         return [$id, $title, $description, $url, $category];
