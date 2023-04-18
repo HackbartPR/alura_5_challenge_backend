@@ -560,10 +560,16 @@ final class VideoTest extends TestCase
         $request = $this->createRequest('GET', '/categorias/1/videos');
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
-
+        
+        #Falta criar este test
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
-        $this->assertArrayHasKey('contents', $body);
+        $this->assertGreaterThan(1, count($body['contents']));
+        $this->assertArrayHasKey('id', $body['contents'][0]);
+        $this->assertArrayHasKey('title', $body['contents'][0]);
+        $this->assertArrayHasKey('description', $body['contents'][0]);
+        $this->assertArrayHasKey('url', $body['contents'][0]);
+        $this->assertArrayHasKey('category', $body['contents'][0]);        
     }
 
 
