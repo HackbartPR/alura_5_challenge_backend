@@ -560,8 +560,7 @@ final class VideoTest extends TestCase
         $request = $this->createRequest('GET', '/categorias/1/videos');
         $response = $this->sendRequest($request);
         $body = json_decode($response->getBody()->getContents(), true);
-        
-        #Falta criar este test
+                
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertArrayHasKey('contents', $body);
         $this->assertGreaterThan(1, count($body['contents']));
@@ -570,6 +569,42 @@ final class VideoTest extends TestCase
         $this->assertArrayHasKey('description', $body['contents'][0]);
         $this->assertArrayHasKey('url', $body['contents'][0]);
         $this->assertArrayHasKey('category', $body['contents'][0]);        
+    }
+
+    public function testShouldShowAVideosFromSpecificName(): void
+    {
+        $video = $this->testShouldInsertVideoWithoutCategory();
+        $payload =  [     
+            'id' => $video['id'],
+            'title' => $video['title'],
+            'description' => $video['description'],
+            'url' => $video['url'],
+            'category' => [
+                'id' => 1,
+                'title' => 'Livre',
+                'color' => '#32CD32'
+            ]
+        ];
+
+        $request = $this->createRequest('GET', '/videos?search=' . $video['title']);
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+                
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('contents', $body); 
+        $this->assertEquals($payload, $body['contents']); 
+    }
+
+    public function testShouldReturnFalseContentWhenSearchAVideoByName(): void
+    {
+
+        $request = $this->createRequest('GET', '/videos?search=abc');
+        $response = $this->sendRequest($request);
+        $body = json_decode($response->getBody()->getContents(), true);
+                
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('contents', $body); 
+        $this->assertEquals(false, $body['contents']); 
     }
 
 

@@ -13,6 +13,11 @@ return [
             'controller'   => \HackbartPR\Controller\ShowVideoController::class
         ),
         array(
+            'method'       => ['GET'],
+            'path_pattern' => '/^\/videos\?search=(?P<name>[^\/]+)$/',
+            'controller'   => \HackbartPR\Controller\ShowVideoByNameController::class
+        ),
+        array(
             'method'       => ['POST'], 
             'path_pattern' => '/^\/videos$/',
             'controller'   => \HackbartPR\Controller\NewVideoController::class

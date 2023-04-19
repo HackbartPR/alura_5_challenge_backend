@@ -106,6 +106,25 @@ class VideoRepository
         return $this->hydrateListVideoArray($response); 
     }
 
+    public function showVideoByName(string $name): array|bool
+    {
+        $query = "SELECT videos.*, CTG.title AS 'ctg_title', CTG.color FROM videos
+        INNER JOIN categories CTG ON CTG.id = videos.category_id
+        WHERE videos.title = ?";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(1, $name, FILTER_DEFAULT);
+        $stmt->execute();
+
+        $response = $stmt->fetch();
+
+        if (!$response) {
+            return $response;
+        }
+
+        return $this->hydrateVideoArray($response); 
+    }
+
     private function hydrateVideoArray(array $video): array
     {
         return [

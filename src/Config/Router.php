@@ -5,7 +5,7 @@ namespace HackbartPR\Config;
 final class Router
 {   
     static public function route(array $routes) {        
-        $action = $_SERVER['PATH_INFO'] ?? '/';
+        $action = $_SERVER['REQUEST_URI'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         $isMatch = false;
