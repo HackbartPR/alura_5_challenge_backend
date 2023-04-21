@@ -20,6 +20,7 @@ $routes = require_once __DIR__ . '/../config/routes.php';
 //Criando Controller
 $class = \HackbartPR\Config\Router::route($routes);
 $controller = $diContainer->get($class);
+$middleware = $diContainer->get(\HackbartPR\Middleware\AuthMiddleware::class);
 
 // Criando um objeto HTTP Request (PSR7) utilizando a fabrica de objeto (PSR 17)
 $psr17Factory = new \Nyholm\Psr7\Factory\Psr17Factory();
@@ -32,7 +33,8 @@ $creator = new \Nyholm\Psr7Server\ServerRequestCreator(
 $serverRequest = $creator->fromGlobals();
 
 //Recebendo Response do Controller
-$responseController = $controller->handle($serverRequest);
+$responseController = $middleware->handle($serverRequest, $controller);
+//$responseController = $controller->handle($serverRequest);
 
 //Enviando Response para o client usando Stream
 $responseBody = $psr17Factory->createStream($responseController->getBody());

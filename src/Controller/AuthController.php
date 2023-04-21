@@ -2,6 +2,7 @@
 
 namespace HackbartPR\Controller;
 
+use Firebase\JWT\JWT;
 use Nyholm\Psr7\Response;
 use HackbartPR\Tools\Hash;
 use HackbartPR\Entity\Controller;
@@ -35,7 +36,10 @@ class AuthController extends Controller
             return new Response(401, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Email or password not found.']));
         }        
 
-        $body = json_encode(['contents'=> 'bnsdksjbksajbdajks']);
+        $payload = ['email' => $email];
+        $key = JWT::encode($payload, $_ENV['JWT_KEY'], $_ENV['JWT_ALGORITHM']);
+
+        $body = json_encode(['contents'=> $key]);
         return new Response(201, ['Content-Type' => 'application/json'], $body);
     }
 

@@ -30,7 +30,8 @@
         "nyholm/psr7": "^1.5",
         "laminas/laminas-httphandlerrunner": "^2.5",
         "guzzlehttp/guzzle": "^7.5",
-        "fakerphp/faker": "^1.21"
+        "fakerphp/faker": "^1.21",
+        "firebase/php-jwt": "^6.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^10"
