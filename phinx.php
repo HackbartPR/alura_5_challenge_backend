@@ -22,6 +22,7 @@ return
             'pass' => $_ENV['DB_PASS'],
             'port' => $_ENV['DB_PORT'],
             'charset' => 'utf8',
+            'password_default' => $_ENV['PASSWORD_DEFAULT'],                    
         ]
     ],
     'version_order' => 'creation'
