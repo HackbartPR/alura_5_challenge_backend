@@ -20,7 +20,7 @@ class AuthController extends Controller
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $validate = $this->validate($request); 
+            $validate = $this->validate($request); 
 
         if (!$validate) {
             return new Response(404, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Email not found.']));
@@ -32,7 +32,7 @@ class AuthController extends Controller
         $isPasswordCorrect = Hash::passwordVerify($password, $user['password'] ?? '');
 
         if (is_bool($user) || !$isPasswordCorrect) {
-            return new Response(401, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Email not found.']));
+            return new Response(401, ['Content-Type' => 'application/json'] , json_encode(['error' => 'Email or password not found.']));
         }        
 
         $body = json_encode(['contents'=> 'bnsdksjbksajbdajks']);

@@ -19,6 +19,7 @@
 - Criar a Requisição GET         /categorias/{id}/videos => Busca todos os videos de uma categoria
 - Criar a Requisição GET         /videos?search={nome} => Busca um video pelo título
 - Vincular os videos as categorias
+- Criar um sistema de autenticação
 
 ## Objetivos Compridos - Proposto por mim (Até o momento)
 - Utilizar Arquitetura MVC
@@ -34,3 +35,6 @@
 - Dupla Validação, validações das Requisições nos Controllers e nas Requisições do Banco (PDO Bind Value)
 - Tests de Validação Utilizando PHPUnit
 - Utilizando Seeders e Fake Datas
+- Utilizar o algoritmo ARGON2ID para hash de senha
+- Realizar verificação do algoritmo de hash para senha atualizá-la caso esteja 'hasheada' em outra versão
+- Realizar a verificação do hash da senha mesmo com e-mail inválido, evitando facilitar Timing attacks 
