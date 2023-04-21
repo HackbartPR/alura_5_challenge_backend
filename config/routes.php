@@ -3,6 +3,11 @@
 return [
     [
         array(
+            'method'       => ['POST'], 
+            'path_pattern' => '/^\/login$/',
+            'controller'   => \HackbartPR\Controller\AuthController::class
+        ),
+        array(
             'method'       => ['GET'], 
             'path_pattern' => '/^\/videos$/',
             'controller'   => \HackbartPR\Controller\AllVideoController::class

@@ -26,7 +26,7 @@ final class UsersTable extends AbstractMigration
               ->create();
 
         if ($this->isMigratingUp()) {
-            $email = 'dev_role@mail.com';
+            $email = $this->getAdapter()->getOption('email_default');
             $password = Hash::passwordHash($this->getAdapter()->getOption('password_default'));
 
             $table->insert([['id' => 1, 'name' => 'developer', 'email' => $email, 'password' => $password]])

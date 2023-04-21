@@ -34,4 +34,12 @@ trait Validations
 
         return [$title, $color];
     }
+
+    private function userValidation(array $body): array
+    {
+        $email = filter_var($body['email'], FILTER_VALIDATE_EMAIL);
+        $password = filter_var($body['password'], FILTER_DEFAULT);
+
+        return [$email, $password];
+    }
 }

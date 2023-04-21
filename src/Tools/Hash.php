@@ -15,7 +15,7 @@ final class Hash
 
     public static function passwordVerify(string $password, string $hash): bool
     {  
-        $authorized = \password_verify($password, $hash ?? '');
+        $authorized = \password_verify($password, $hash);
 
         if (password_needs_rehash($hash, $_ENV['CURRENT_HASH'])) {
             $newHash = \password_hash($hash, $_ENV['CURRENT_HASH']);             
