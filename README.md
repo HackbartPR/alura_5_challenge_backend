@@ -26,6 +26,7 @@
 - Criar Container MySQL
 - Criar Sistema de Migrations
 - Criar um Router
+- Criar Middlewares
 - Utilizar Autoload do Composer (PSR 4)
 - Utilizar Sistema de Container de Injeção de Dependências (PSR 11)
 - Utilizar RequestHandlerInterface (PSR 15)
@@ -37,4 +38,5 @@
 - Utilizando Seeders e Fake Datas
 - Utilizar o algoritmo ARGON2ID para hash de senha
 - Realizar verificação do algoritmo de hash para senha atualizá-la caso esteja 'hasheada' em outra versão
-- Realizar a verificação do hash da senha mesmo com e-mail inválido, evitando facilitar Timing attacks 
+- Realizar a verificação do hash da senha mesmo com e-mail inválido, evitando facilitar Timing attacks
+- Utilizar autorização com JWT token e realizar a verificação utilizando Middlewares 
